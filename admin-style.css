@@ -38,4 +38,319 @@
     border: 2px dashed #ccc;
     background-color: #f0f0f0;
     margin-bottom: 10px;
+}
+
+/* Minimal Select2 admin styling for product meta fields */
+.select2-container--default .select2-selection--multiple.select2-admin {
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    min-height: 38px;
+    padding: 4px 8px;
+    background: #fff;
+    font-size: 15px;
+}
+.select2-container--default .select2-selection--multiple.select2-admin .select2-selection__choice {
+    background: none;
+    border: none;
+    color: #222;
+    font-weight: 500;
+    border-radius: 3px;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    padding: 2px 8px;
+    box-shadow: none;
+}
+.select2-container--default .select2-selection--multiple.select2-admin .select2-selection__choice__remove {
+    display: none !important;
+}
+.select2-container--default .select2-selection--multiple.select2-admin .select2-search__field {
+    min-width: 120px;
+}
+.select2-container--default .select2-results__option--highlighted.select2-admin,
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #007cba;
+    color: #fff;
+}
+.select2-container--default .select2-results__option.select2-admin {
+    font-size: 15px;
+}
+
+/* Modern, clean styles for native multi-select fields */
+.custom-multiselect {
+    width: 100%;
+    max-width: 500px;
+    min-height: 90px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 15px;
+    padding: 8px 6px;
+    color: #222;
+    box-shadow: none;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.custom-multiselect:focus {
+    border-color: #007cba;
+    background: #f8fcff;
+}
+.custom-multiselect option {
+    padding: 6px 10px;
+    border-radius: 3px;
+    margin: 2px 0;
+}
+.custom-multiselect option:checked {
+    background: #007cba;
+    color: #fff;
+}
+
+/* Custom Cart Page Layout Styles */
+.custom-cart-outer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0 60px 0;
+}
+.custom-cart-grid {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+.custom-cart-main-col {
+    flex: 2 1 0;
+}
+.custom-cart-summary-col {
+    flex: 1 1 320px;
+    min-width: 320px;
+    max-width: 400px;
+}
+.custom-cart-title {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-align: left;
+}
+.custom-cart-item-row {
+    margin-bottom: 32px;
+}
+.custom-cart-item-box {
+    display: flex;
+    align-items: flex-start;
+    background: #f4f4f4;
+    border-radius: 10px;
+    padding: 24px 24px 18px 24px;
+    gap: 24px;
+    position: relative;
+}
+.custom-cart-item-image img {
+    width: 70px;
+    height: 110px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
+}
+.custom-cart-item-info {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.custom-cart-item-title {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.custom-cart-item-desc {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 6px;
+}
+.custom-cart-item-qty {
+    margin-top: 8px;
+}
+.custom-cart-item-pricebox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 80px;
+}
+.custom-cart-item-price {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #222;
+}
+.custom-cart-item-oldprice {
+    font-size: 1em;
+    color: #888;
+    text-decoration: line-through;
+    margin-top: 2px;
+}
+.custom-cart-item-remove {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+}
+.custom-cart-gifts-row {
+    margin-top: 10px;
+}
+.custom-cart-gifts-title {
+    font-size: 1em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-left: 2px;
+}
+.custom-cart-gifts-list {
+    display: flex;
+    gap: 18px;
+}
+.custom-cart-gift-box {
+    border: 2px solid #e0e0e0;
+    background: #fff;
+    border-radius: 7px;
+    padding: 12px 16px 10px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 110px;
+    max-width: 140px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
+}
+.custom-cart-gift-image img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 6px;
+}
+.custom-cart-gift-title {
+    font-size: 0.98em;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+}
+.custom-cart-hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 48px 0 32px 0;
+}
+.custom-cart-recommended-section {
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+.custom-cart-recommended-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #222;
+}
+.custom-cart-recommended-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+.custom-cart-recommended-box {
+    border: 2px solid #e0e0e0;
+    background: #fff;
+    border-radius: 7px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 110px;
+    max-width: 140px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
+}
+.custom-cart-recommended-image img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 6px;
+}
+.custom-cart-recommended-title {
+    font-size: 0.98em;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+}
+.custom-cart-summary-box {
+    background: #f4f4f4;
+    border-radius: 10px;
+    padding: 28px 24px 18px 24px;
+    margin-bottom: 24px;
+    font-size: 1.08em;
+}
+.pincode-estimator-form {
+    background: #ededed;
+    border-radius: 8px;
+    padding: 22px 18px 18px 18px;
+    margin-top: 18px;
+    margin-bottom: 0;
+}
+.pincode-estimator-title {
+    font-size: 1.08em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.pincode-estimator-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.pincode-estimator-form input[type="text"] {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    background: #fff;
+}
+.pincode-estimator-form button {
+    padding: 7px 18px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.pincode-estimator-form button:active,
+.pincode-estimator-form button:focus {
+    background: #333;
+}
+.pincode-estimator-result {
+    font-size: 0.98em;
+    color: #222;
+    min-height: 18px;
+    margin-top: 2px;
+}
+@media (max-width: 900px) {
+    .custom-cart-grid {
+        flex-direction: column;
+        gap: 0;
+    }
+    .custom-cart-summary-col {
+        max-width: 100%;
+        min-width: 0;
+        margin-top: 36px;
+    }
+}
+@media (max-width: 600px) {
+    .custom-cart-item-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 10px 12px 10px;
+    }
+    .custom-cart-summary-box {
+        padding: 18px 10px 12px 10px;
+    }
+    .pincode-estimator-form {
+        padding: 14px 8px 10px 8px;
+    }
 } 

@@ -1,9 +1,8 @@
 <?php
 
-function mytheme_add_woocommerce_support() {
-    add_theme_support( 'woocommerce' );
-}
-add_action( 'after_setup_theme', 'mytheme_add_woocommerce_support' );
+add_action('after_setup_theme', function() {
+    add_theme_support('woocommerce');
+});
 
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_style('child-style', get_stylesheet_uri(), [], time());
@@ -23,11 +22,14 @@ add_action('wp_enqueue_scripts', function() {
  */
 function enqueue_admin_product_scripts($hook) {
     global $post;
-    if ($hook == 'post-new.php' || $hook == 'post.php') {
-        if ('product' === $post->post_type) {
-            wp_enqueue_style('admin-product-style', get_stylesheet_directory_uri() . '/admin-style.css', [], time());
-            wp_enqueue_script('admin-product-js', get_stylesheet_directory_uri() . '/js/admin-product.js', ['jquery', 'jquery-ui-sortable'], time(), true);
-        }
+    // Only enqueue on product add/edit screens
+    if (($hook === 'post-new.php' || $hook === 'post.php') && isset($post->post_type) && $post->post_type === 'product') {
+        // Custom admin styles and scripts
+        wp_enqueue_style('admin-product-style', get_stylesheet_directory_uri() . '/admin-style.css', [], time());
+        wp_enqueue_script('admin-product-js', get_stylesheet_directory_uri() . '/js/admin-product.js', ['jquery'], time(), true);
+        // Select2 from CDN
+        wp_enqueue_style('select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', [], '4.1.0');
+        wp_enqueue_script('select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['jquery'], '4.1.0', true);
     }
 }
 add_action('admin_enqueue_scripts', 'enqueue_admin_product_scripts');
@@ -145,19 +147,21 @@ function display_faqs_section() {
 
 function display_gift_product_in_cart($cart_item, $cart_item_key) {
     $product_id = $cart_item['product_id'];
-    $gift_product_id = get_post_meta($product_id, '_gift_product_id', true);
-
-    if (!empty($gift_product_id)) {
-        $gift_product = wc_get_product($gift_product_id);
-        if ($gift_product) {
-            echo '<div class="gift-product-info">';
-            echo '<strong>Your Gift:</strong> ';
-            echo '<a href="' . esc_url($gift_product->get_permalink()) . '">';
-            echo $gift_product->get_image('thumbnail');
-            echo esc_html($gift_product->get_name());
-            echo '</a>';
-            echo '</div>';
+    $gift_product_ids = get_post_meta($product_id, '_gift_product_id', true);
+    if (!empty($gift_product_ids)) {
+        $gift_product_ids = explode(',', $gift_product_ids);
+        echo '<div class="gift-product-info">';
+        echo '<strong>Your Gift:</strong> ';
+        foreach ($gift_product_ids as $gift_id) {
+            $gift_product = wc_get_product($gift_id);
+            if ($gift_product) {
+                echo '<a href="' . esc_url($gift_product->get_permalink()) . '">';
+                echo $gift_product->get_image('thumbnail');
+                echo esc_html($gift_product->get_name());
+                echo '</a> ';
+            }
         }
+        echo '</div>';
     }
 }
 
@@ -199,42 +203,6 @@ function display_recommended_products() {
         echo '</ul>';
         echo '</div>';
     }
-}
-
-// add_action('woocommerce_cart_collaterals', 'add_pincode_estimator_form');
-
-function add_pincode_estimator_form() {
-    ?>
-    <div class="pincode-estimator-form">
-        <h3>Estimate Delivery</h3>
-        <p>Enter your pincode to check the estimated delivery time.</p>
-        <input type="text" id="pincode_input" placeholder="Enter Pincode">
-        <button type="button" id="check_pincode_btn">Check</button>
-        <div id="delivery_estimate_result" style="margin-top: 10px;"></div>
-    </div>
-    <?php
-}
-
-// add_action('wp_ajax_check_pincode_delivery', 'check_pincode_delivery_callback');
-// add_action('wp_ajax_nopriv_check_pincode_delivery', 'check_pincode_delivery_callback');
-
-function check_pincode_delivery_callback() {
-    if (isset($_POST['pincode'])) {
-        $pincode = sanitize_text_field($_POST['pincode']);
-        $message = '';
-
-        if (substr($pincode, 0, 3) === '456') {
-            $message = 'Estimated delivery in 2 Days.';
-        } elseif (substr($pincode, -3) === '123') {
-            $message = 'Estimated delivery in 4 Days.';
-        } else {
-            $message = 'Estimated delivery in 7 Days.';
-        }
-        wp_send_json_success(['message' => $message]);
-    } else {
-        wp_send_json_error(['message' => 'Pincode is required.']);
-    }
-    wp_die();
 }
 
 /**
@@ -289,22 +257,33 @@ function render_product_custom_fields_metabox($post) {
             <tr>
                 <th><label for="_gift_product_id"><?php _e('Gift Product ID', 'text-domain'); ?></label></th>
                 <td>
-                    <input type="number" name="_gift_product_id" id="_gift_product_id" value="<?php echo esc_attr($gift_product_id); ?>" class="short">
-                    <p class="description"><?php _e('Enter the product ID of the gift item.', 'text-domain'); ?></p>
+                    <select name="_gift_product_id[]" id="_gift_product_id" multiple="multiple" class="custom-multiselect" style="width: 100%; max-width: 500px;">
+                        <?php 
+                        $gift_product_ids = $gift_product_id;
+                        if (!is_array($gift_product_ids)) {
+                            $gift_product_ids = !empty($gift_product_ids) ? explode(',', $gift_product_ids) : [];
+                        }
+                        foreach ($all_products as $product) : ?>
+                            <option value="<?php echo esc_attr($product->ID); ?>" <?php selected(in_array($product->ID, $gift_product_ids)); ?>>
+                                <?php echo esc_html($product->post_title); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <p class="description">Select one or more gift products.</p>
                 </td>
             </tr>
             <!-- Recommended Products -->
             <tr>
                 <th><label for="_recommended_products"><?php _e('Recommended Products', 'text-domain'); ?></label></th>
                 <td>
-                    <select name="_recommended_products[]" id="_recommended_products" multiple="multiple" class="wc-product-search" style="width: 50%;">
+                    <select name="_recommended_products[]" id="_recommended_products" multiple="multiple" class="custom-multiselect" style="width: 100%; max-width: 500px;">
                         <?php foreach ($all_products as $product) : ?>
                             <option value="<?php echo esc_attr($product->ID); ?>" <?php selected(in_array($product->ID, $recommended_products)); ?>>
                                 <?php echo esc_html($product->post_title); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <p class="description"><?php _e('Select products to recommend. Hold Ctrl/Cmd to select multiple.', 'text-domain'); ?></p>
+                    <p class="description">Select products to recommend.</p>
                 </td>
             </tr>
              <!-- FAQs Repeater -->
@@ -367,8 +346,9 @@ function save_product_custom_fields_metabox($post_id) {
     }
 
     // Save Gift Product ID
-    if (isset($_POST['_gift_product_id'])) {
-        update_post_meta($post_id, '_gift_product_id', absint($_POST['_gift_product_id']));
+    if (isset($_POST['_gift_product_id']) && is_array($_POST['_gift_product_id'])) {
+        $gift_ids = array_map('absint', $_POST['_gift_product_id']);
+        update_post_meta($post_id, '_gift_product_id', implode(',', $gift_ids));
     } else {
         delete_post_meta($post_id, '_gift_product_id');
     }
