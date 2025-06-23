@@ -1,0 +1,162 @@
+/*
+ Theme Name:   Twenty Twenty-Five Child
+ Theme URI:    http://example.com/twentytwentyfive-child/
+ Description:  Twenty Twenty-Five Child Theme
+ Template:     twentytwentyfive
+ Version:      1.0.0
+ Text Domain:  twentytwentyfive-child
+*/ 
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-gallery {
+    width: 100%;
+}
+
+.product-details {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .product-gallery {
+        width: 50%;
+        padding-right: 20px;
+    }
+
+    .product-details {
+        width: 50%;
+        padding-left: 20px;
+    }
+}
+
+.custom-purchase-options .purchase-modes label {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-purchase-options .purchase-modes label:has(input:checked) {
+    background-color: #f0f8ff;
+    border-color: #007cba;
+}
+
+.purchase-options-container,
+.whats-included-box,
+.faqs-section {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.purchase-options-container h3,
+.whats-included-box h3,
+.faqs-section h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.purchase-options label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.try-once-options {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.delivery-frequency {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* FAQ Section */
+.faq-section {
+    margin-top: 40px;
+    clear: both;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.faq-question {
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-right: 25px;
+}
+
+.faq-question::after {
+    content: '+';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.faq-item.active .faq-question::after {
+    content: '-';
+}
+
+.faq-answer {
+    padding-top: 10px;
+}
+
+/* Cart Page Styling */
+
+.gift-product-info {
+    margin-top: 10px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+
+.gift-product-info img {
+    max-width: 40px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.recommended-products-section {
+    margin-top: 40px;
+    clear: both;
+}
+
+.pincode-estimator-form {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.pincode-estimator-form h3 {
+    margin-top: 0;
+}
+
+.pincode-estimator-form input[type="text"] {
+    width: calc(100% - 100px);
+    margin-right: 10px;
+}
+
+.pincode-estimator-form button {
+    width: 90px;
+} 
